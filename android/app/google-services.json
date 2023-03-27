@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "198956442238",
+    "project_id": "fir-class-da84e",
+    "storage_bucket": "fir-class-da84e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:198956442238:android:db4f11b4bba6477553ee2f",
+        "android_client_info": {
+          "package_name": "com.example.firbase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "198956442238-4t48mqdis1g14jvf2lg1h6d1qij5nbh8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzFCviHzZKrQFyTIZSIWIpUvk5eelg7iw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "198956442238-4t48mqdis1g14jvf2lg1h6d1qij5nbh8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
