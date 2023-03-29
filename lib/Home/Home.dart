@@ -16,6 +16,9 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+  final titleController =  TextEditingController();
+  final descController =  TextEditingController();
+
  @override
   void initState() {
    context.read<PostBloc>().add(PostAll());
@@ -24,13 +27,10 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    context.read<PostBloc>().add(PostAll());
 
     return
       Scaffold(
-      body:
-
-          BlocBuilder<PostBloc, PostState>(
+      body: BlocBuilder<PostBloc, PostState>(
             builder: (context, state){
 
               if(state is PostLoading){
@@ -46,9 +46,21 @@ class _HomeState extends State<Home> {
                     var data = state.post[index];
                     return
 
-                      ListTile(
-                        title:Text(data.title!),
-                        subtitle:Text(data.desc!) ,
+                      Dismissible(
+
+                        key: ValueKey<String>(data.postId!),
+                        onDismissed: (value){
+                          FirebaseServices().delete(data.postId!).then((value){
+                            context.read<PostBloc>().add(PostAll());
+                          });
+                        },
+                        child: ListTile(
+                          title:Text(data.title!),
+                          subtitle:Text(data.desc!) ,
+                          trailing: IconButton(icon: Icon(Icons.edit),onPressed: (){
+                          myShowDialog(data.postId!, data.title!, data.desc!);
+                          },),
+                        ),
                       );
                   });
 
@@ -62,5 +74,43 @@ class _HomeState extends State<Home> {
             },
           )
     );
+  }
+
+   myShowDialog(String data, title, desc) {
+     titleController.text = title;
+     descController.text = desc;
+
+
+   return
+     showDialog(context: context, builder: (context)=>
+       AlertDialog(
+         title: Text("Edit"),
+         content: Column(
+           children: [
+             TextField(
+               controller:titleController ,
+             ),
+             SizedBox(height: 15,),
+             TextField(
+               controller:descController ,
+             ),
+             SizedBox(height: 15,),
+             ElevatedButton(onPressed: (){
+
+               FirebaseServices().update({
+                 "title":titleController.text,
+                 "desc":descController.text,
+               }, data).then((value){
+                 titleController.clear();
+                 descController.clear();
+                 Navigator.pop(context);
+                 context.read<PostBloc>().add(PostAll());
+
+               });
+             }, child: Text("Edit"))
+           ],
+         ),
+       )
+   );
   }
 }

@@ -27,5 +27,19 @@ List <PostModel> post =[];
 
   }
 
+  Future post(Map<String, dynamic> data)async{
+   var docId = DateTime.now().microsecondsSinceEpoch.toString();
+    await GoogleHelper.fireBaseStore.collection("post").doc(docId).set(data);
+
+  }
+
+ Future update(Map<String, dynamic> data, String docId)async{
+   await GoogleHelper.fireBaseStore.collection("post").doc(docId).update(data);
+
+ }
+ Future delete(String docId)async{
+   await GoogleHelper.fireBaseStore.collection("post").doc(docId).delete();
+
+ }
 
 }
